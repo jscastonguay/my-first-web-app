@@ -10,6 +10,9 @@
         <input type="number" id="Counter" name="Counter" value="@ViewData["Counter"]">
     </div>
     <div>
-        <input type="submit" value="Increase">
+        <input type="submit" value="Set">
     </div>
+</form>
+<form asp-controller="Todos" asp-action="CounterInc" method="get">
+    <input type="submit" value="Increase">
 </form>
