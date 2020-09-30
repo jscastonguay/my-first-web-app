@@ -1,36 +1,37 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Encodings.Web;
+using MyFirstWebApp.Models;
 
 namespace MyFirstWebApp.Controllers
 {
     public class TodosController : Controller
     {
         [TempData]
-        public int _counter { get; set; }
+        public int Counter { get; set; }
 
         [HttpPost]
-        public IActionResult Index(int Counter)
+        public IActionResult Index(CounterModel NewCounter)
         {
-            Console.WriteLine($"Index(int Counter): {Counter}, {_counter}");
-            _counter = Counter;
-            ViewData["Counter"] = _counter;
+            Console.WriteLine($"Index(int Counter): {NewCounter.Counter}, {Counter}");
+            Counter = NewCounter.Counter;
+            ViewData["Counter"] = Counter;
             TempData.Keep();
             return View();
         }
 
         public IActionResult Index()
         {
-            Console.WriteLine($"Index(): {_counter}");
-            ViewData["Counter"] = _counter;
+            Console.WriteLine($"Index(): {Counter}");
+            ViewData["Counter"] = Counter;
             TempData.Keep();
             return View();
         }
 
         public IActionResult CounterInc()
         {
-            Console.WriteLine($"CounterInc(): {_counter}");
-            _counter++;
+            Console.WriteLine($"CounterInc(): {Counter}");
+            Counter++;
             TempData.Keep();
             return RedirectToAction(nameof(Index));
         }

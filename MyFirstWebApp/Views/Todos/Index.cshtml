@@ -1,3 +1,5 @@
+@model MyFirstWebApp.Models.CounterModel
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -16,3 +18,6 @@
 <form asp-controller="Todos" asp-action="CounterInc" method="get">
     <input type="submit" value="Increase">
 </form>
+<p>
+    Voici la valeur du counter: @ViewData["Counter"]
+</p>
