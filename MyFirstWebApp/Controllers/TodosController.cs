@@ -8,20 +8,31 @@ namespace MyFirstWebApp.Controllers
     {
         [TempData]
         public int _counter { get; set; }
-        // 
-        // GET: /Todos/
+
+        [HttpPost]
         public IActionResult Index(int Counter)
         {
-            Console.WriteLine($"Voici le counter: {Counter}");
+            Console.WriteLine($"Index(int Counter): {Counter}, {_counter}");
             _counter = Counter;
             ViewData["Counter"] = _counter;
+            TempData.Keep();
+            return View();
+        }
+
+        public IActionResult Index()
+        {
+            Console.WriteLine($"Index(): {_counter}");
+            ViewData["Counter"] = _counter;
+            TempData.Keep();
             return View();
         }
 
         public IActionResult CounterInc()
         {
+            Console.WriteLine($"CounterInc(): {_counter}");
             _counter++;
-            return RedirectToAction(nameof(Index), _counter);
+            TempData.Keep();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
