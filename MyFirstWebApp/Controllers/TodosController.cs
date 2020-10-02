@@ -37,14 +37,7 @@ namespace MyFirstWebApp.Controllers
         private CounterModel GetCounter()
         {
             CounterModel Value = new CounterModel { Counter = 0 };
-
-            // Récupère tous les éléments (Counter) dans la BD.
-            //IQueryable<CounterModel> Query = from m in _context.Counter
-            //                               select m;
-
             IQueryable<CounterModel> Query = _context.Counter;
-
-            //_context.
 
             if (Query.Any())
             {
@@ -53,7 +46,6 @@ namespace MyFirstWebApp.Controllers
                 Value = c[0];
                 for (int i = 1; i < c.Length; i++)
                 {
-                    //CounterModel c = Query.ElementAt(i);
                     _context.Counter.Remove(c[i]);
                 }
             }
@@ -94,26 +86,5 @@ namespace MyFirstWebApp.Controllers
         {
             return RedirectToAction(nameof(Index));
         }
-
-        /*private int GetCounterValue()
-        {
-            int Value = 0;
-
-            // Récupère tous les éléments (Counter) dans la BD.
-            IQueryable<int> Query = from m in _context.Counter
-                                    select m.Counter;
-
-            if (Query.Any())
-            {
-                Value = Query.First();
-            }
-            else
-            {
-                _context.Counter.Add(new CounterModel { Counter = Value });
-                _context.SaveChanges();
-            }
-
-            return Value;
-        }*/
     }
 }
