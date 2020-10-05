@@ -4,6 +4,7 @@ using System.Text.Encodings.Web;
 using MyFirstWebApp.Models;
 using Todos.Data;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace MyFirstWebApp.Controllers
 {
@@ -69,21 +70,31 @@ namespace MyFirstWebApp.Controllers
             _context.SaveChanges();
             ViewData["Counter"] = NewCounter.Counter;
 
-            return View();
+            IEnumerable<TodoModel> List = _context.Counter;
+
+            return View(List);
         }
 
         public IActionResult Index()
         {
             TodoModel current = GetCounter();
-            current.Counter++;
+            /*current.Counter++;
             _context.Counter.Update(current);
-            _context.SaveChanges();
+            _context.SaveChanges();*/
             ViewData["Counter"] = current.Counter;
-            return View();
+
+            IEnumerable<TodoModel> List = _context.Counter;
+
+            return View(List);
         }
 
         public IActionResult CounterInc()
         {
+            TodoModel current = GetCounter();
+            current.Counter++;
+            _context.Counter.Update(current);
+            _context.SaveChanges();
+
             return RedirectToAction(nameof(Index));
         }
     }
