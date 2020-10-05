@@ -1,4 +1,4 @@
-@model MyFirstWebApp.Models.CounterModel
+@model MyFirstWebApp.Models.TodoModel
 
 @{
     ViewData["Title"] = "Index";
@@ -21,3 +21,21 @@
 <p>
     Voici la valeur du counter: @ViewData["Counter"]
 </p>
+<p>
+    <h3>Voici la liste des TODO de priorité 0</h3>
+</p>
+<table>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.etiquette)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.priority)
+            </th>
+        </tr>
+    </thead>
+</table>

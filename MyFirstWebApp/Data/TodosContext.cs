@@ -10,6 +10,6 @@ namespace Todos.Data
         {
         }
 
-        public DbSet<CounterModel> Counter { get; set; }
+        public DbSet<TodoModel> Counter { get; set; }
     }
 }

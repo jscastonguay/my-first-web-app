@@ -15,13 +15,13 @@ namespace MyFirstWebApp.Controllers
         {
             get
             {
-                CounterModel Value = GetCounter();
+                TodoModel Value = GetCounter();
                 return Value.Counter;
             }
 
             set
             {
-                CounterModel Value = GetCounter();
+                TodoModel Value = GetCounter();
                 Value.Counter = value;
                 _context.Counter.Update(Value);
             }
@@ -34,14 +34,14 @@ namespace MyFirstWebApp.Controllers
 
         // Make sure that there is one and only one item in the database and
         // then returns it.
-        private CounterModel GetCounter()
+        private TodoModel GetCounter()
         {
-            CounterModel Value = new CounterModel { Counter = 0 };
-            IQueryable<CounterModel> Query = _context.Counter;
+            TodoModel Value = new TodoModel { Counter = 0 };
+            IQueryable<TodoModel> Query = _context.Counter;
 
             if (Query.Any())
             {
-                CounterModel[] c = Query.ToArray();
+                TodoModel[] c = Query.ToArray();
 
                 Value = c[0];
                 for (int i = 1; i < c.Length; i++)
@@ -59,11 +59,11 @@ namespace MyFirstWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(CounterModel NewCounter)
+        public IActionResult Index(TodoModel NewCounter)
         {
             Console.WriteLine($"Index(int Counter): {NewCounter.Counter}");
 
-            CounterModel current = GetCounter();
+            TodoModel current = GetCounter();
             current.Counter = NewCounter.Counter;
             _context.Counter.Update(current);
             _context.SaveChanges();
@@ -74,7 +74,7 @@ namespace MyFirstWebApp.Controllers
 
         public IActionResult Index()
         {
-            CounterModel current = GetCounter();
+            TodoModel current = GetCounter();
             current.Counter++;
             _context.Counter.Update(current);
             _context.SaveChanges();
