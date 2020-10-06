@@ -14417,6 +14417,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\Proprietaire\\Documents\\tmp\\my-first-web-app\\MyFirstWebApp\\Views\\Todos\\AddTodo.cshtml",
+      "TargetPath": "Views\\Todos\\AddTodo.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\Proprietaire\\Documents\\tmp\\my-first-web-app\\MyFirstWebApp\\Views\\Todos\\Index.cshtml",
       "TargetPath": "Views\\Todos\\Index.cshtml",
       "FileKind": "mvc"
