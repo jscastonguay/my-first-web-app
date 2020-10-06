@@ -2,7 +2,8 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Encodings.Web;
 using MyFirstWebApp.Models;
-using Todos.Data;
+using MyFirstWebApp.Business;
+using MyFirstWebApp.Context.Data;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -10,39 +11,39 @@ namespace MyFirstWebApp.Controllers
 {
     public class TodosController : Controller
     {
-        private readonly TodosContext _context;
+        private readonly TodoContext _context;
 
         private int Counter
         {
             get
             {
-                TodoModel Value = GetCounter();
-                return Value.Counter;
+                Counter counter = GetCounter();
+                return counter.counterValue;
             }
 
             set
             {
-                TodoModel Value = GetCounter();
-                Value.Counter = value;
-                _context.Counter.Update(Value);
+                Counter counter = GetCounter();
+                counter.counterValue = value;
+                _context.Counter.Update(counter);
             }
         }
 
-        public TodosController(TodosContext context)
+        public TodosController(TodoContext context)
         {
             _context = context;
         }
 
         // Make sure that there is one and only one item in the database and
         // then returns it.
-        private TodoModel GetCounter()
+        private Counter GetCounter()
         {
-            TodoModel Value = new TodoModel { Counter = 0 };
-            IQueryable<TodoModel> Query = _context.Counter;
+            Counter Value = new Counter { counterValue = 0 };
+            IQueryable<Counter> Query = _context.Counter;
 
             if (Query.Any())
             {
-                TodoModel[] c = Query.ToArray();
+                Counter[] c = Query.ToArray();
 
                 Value = c[0];
                 for (int i = 1; i < c.Length; i++)
@@ -60,38 +61,36 @@ namespace MyFirstWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(TodoModel NewCounter)
+        public IActionResult Index(TodosListModel NewTodosList)
         {
-            Console.WriteLine($"Index(int Counter): {NewCounter.Counter}");
+            Console.WriteLine($"Index(int Counter): {NewTodosList.counter.counterValue}");
 
-            TodoModel current = GetCounter();
-            current.Counter = NewCounter.Counter;
+            Counter current = GetCounter();
+            current.counterValue = NewTodosList.counter.counterValue;
             _context.Counter.Update(current);
             _context.SaveChanges();
-            ViewData["Counter"] = NewCounter.Counter;
+            ViewData["Counter"] = NewTodosList.counter.counterValue;
 
-            IEnumerable<TodoModel> List = _context.Counter;
-
-            return View(List);
+            return View(NewTodosList);
         }
 
         public IActionResult Index()
         {
-            TodoModel current = GetCounter();
-            /*current.Counter++;
-            _context.Counter.Update(current);
-            _context.SaveChanges();*/
-            ViewData["Counter"] = current.Counter;
+            TodosListModel current = new TodosListModel();
+            current.counter = GetCounter();
+            
+            ViewData["Counter"] = current.counter.counterValue;
 
-            IEnumerable<TodoModel> List = _context.Counter;
+            List<Todo> List = _context.Todo.ToList<Todo>();
+            current.todosList = List;
 
-            return View(List);
+            return View(current);
         }
 
         public IActionResult CounterInc()
         {
-            TodoModel current = GetCounter();
-            current.Counter++;
+            Counter current = GetCounter();
+            current.counterValue++;
             _context.Counter.Update(current);
             _context.SaveChanges();
 

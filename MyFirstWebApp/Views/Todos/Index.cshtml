@@ -1,4 +1,4 @@
-@model IEnumerable<MyFirstWebApp.Models.TodoModel>
+@model MyFirstWebApp.Models.TodosListModel
 
 @{
     ViewData["Title"] = "Index";
@@ -8,8 +8,8 @@
 
 <form method="post">
     <div>
-        <label for="Counter">Ceci est le counter:</label>
-        <input type="number" id="Counter" name="Counter" value="@ViewData["Counter"]">
+        <label for="counter">Ceci est le counter:</label>
+        <input type="number" id="counter" name="counter" value="@ViewData["Counter"]">
     </div>
     <div>
         <input type="submit" value="Set">
@@ -28,18 +28,18 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.description)
+                @Html.DisplayNameFor(model => model.todosList[0].description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.etiquette)
+                @Html.DisplayNameFor(model => model.todosList[0].etiquette)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.priority)
+                @Html.DisplayNameFor(model => model.todosList[0].priority)
             </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.todosList) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.description)

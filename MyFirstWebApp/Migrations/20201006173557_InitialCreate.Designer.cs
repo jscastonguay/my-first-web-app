@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Todos.Data;
+using MyFirstWebApp.Context.Data;
 
 namespace MyFirstWebApp.Migrations
 {
-    [DbContext(typeof(TodosContext))]
-    [Migration("20201002201422_extendToTodoTake2")]
-    partial class extendToTodoTake2
+    [DbContext(typeof(TodoContext))]
+    [Migration("20201006173557_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -17,13 +17,24 @@ namespace MyFirstWebApp.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.8");
 
-            modelBuilder.Entity("MyFirstWebApp.Models.TodoModel", b =>
+            modelBuilder.Entity("MyFirstWebApp.Business.Counter", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Counter")
+                    b.Property<int>("counterValue")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Counter");
+                });
+
+            modelBuilder.Entity("MyFirstWebApp.Business.Todo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("description")
@@ -37,7 +48,7 @@ namespace MyFirstWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Counter");
+                    b.ToTable("Todo");
                 });
 #pragma warning restore 612, 618
         }

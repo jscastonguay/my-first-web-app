@@ -1,6 +1,6 @@
 using System;
 
-namespace MyFirstWebApp.Models
+namespace MyFirstWebApp.Business
 {
     public enum Etiquette
     {
@@ -10,10 +10,9 @@ namespace MyFirstWebApp.Models
         Famille
     };
 
-    public class TodoModel
+    public class Todo
     {
         public int Id { get; set; }
-        public int Counter { get; set; }
         public string description { get; set; }
         public Etiquette etiquette { get; set; }
         public int priority { get; set; }

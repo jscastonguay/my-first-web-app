@@ -12,11 +12,26 @@ namespace MyFirstWebApp.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Counter = table.Column<int>(nullable: false)
+                    counterValue = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Counter", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Todo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    description = table.Column<string>(nullable: true),
+                    etiquette = table.Column<int>(nullable: false),
+                    priority = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Todo", x => x.Id);
                 });
         }
 
@@ -24,6 +39,9 @@ namespace MyFirstWebApp.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Counter");
+
+            migrationBuilder.DropTable(
+                name: "Todo");
         }
     }
 }
