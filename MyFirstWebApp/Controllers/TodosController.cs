@@ -13,22 +13,6 @@ namespace MyFirstWebApp.Controllers
     {
         private readonly TodoContext _context;
 
-        private int Counter
-        {
-            get
-            {
-                Counter counter = GetCounter();
-                return counter.counterValue;
-            }
-
-            set
-            {
-                Counter counter = GetCounter();
-                counter.counterValue = value;
-                _context.Counter.Update(counter);
-            }
-        }
-
         public TodosController(TodoContext context)
         {
             _context = context;
@@ -61,17 +45,17 @@ namespace MyFirstWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(TodosListModel NewTodosList)
+        public IActionResult Index(int newCounterValue)
         {
-            Console.WriteLine($"Index(int Counter): {NewTodosList.counter.counterValue}");
+            Console.WriteLine($"Index(int Counter): {newCounterValue}");
 
             Counter current = GetCounter();
-            current.counterValue = NewTodosList.counter.counterValue;
+            current.counterValue = newCounterValue;
             _context.Counter.Update(current);
             _context.SaveChanges();
-            ViewData["Counter"] = NewTodosList.counter.counterValue;
+            ViewData["Counter"] = newCounterValue;
 
-            return View(NewTodosList);
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Index()
