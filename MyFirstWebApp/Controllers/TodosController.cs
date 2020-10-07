@@ -44,6 +44,15 @@ namespace MyFirstWebApp.Controllers
             return Value;
         }
 
+        private TodosListModel GetModel()
+        {
+            TodosListModel current = new TodosListModel();
+            current.counter = GetCounter();
+            current.todosList = _context.Todo.ToList<Todo>();
+
+            return current;
+        }
+
         [HttpPost]
         public IActionResult Index(int newCounterValue)
         {
@@ -60,14 +69,8 @@ namespace MyFirstWebApp.Controllers
 
         public IActionResult Index()
         {
-            TodosListModel current = new TodosListModel();
-            current.counter = GetCounter();
-
+            TodosListModel current = GetModel();
             ViewData["Counter"] = current.counter.counterValue;
-
-            List<Todo> List = _context.Todo.ToList<Todo>();
-            current.todosList = List;
-
             return View(current);
         }
 
@@ -83,20 +86,42 @@ namespace MyFirstWebApp.Controllers
 
         public IActionResult AddTodo()
         {
-            return View("AddTodo");
+            return View();
         }
 
         [HttpPost]
         public IActionResult AddTodo(string description, int priority, int etiquette)
         {
             Console.WriteLine($"Voici la description: {description}");
-            
-            Todo newTodo = new Todo();
-            newTodo.description = description;
-            newTodo.priority = priority;
-            newTodo.etiquette = (Etiquette)etiquette;
 
-            _context.Todo.Add(newTodo);
+            if (!String.IsNullOrEmpty(description))
+            {
+                Todo newTodo = new Todo();
+                newTodo.description = description;
+                newTodo.priority = priority;
+                newTodo.etiquette = (Etiquette)etiquette;
+
+                _context.Todo.Add(newTodo);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult DeleteTodo()
+        {
+            TodosListModel current = GetModel();
+            return View(current);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteTodo(int[] todo)
+        {
+            foreach (int item in todo)
+            {
+                var itemToDelete = _context.Todo.Find(item);
+                _context.Todo.RemoveRange(itemToDelete);
+            }
             _context.SaveChanges();
 
             return RedirectToAction(nameof(Index));

@@ -14392,6 +14392,11 @@
   "RootNamespace": "MyFirstWebApp",
   "Documents": [
     {
+      "FilePath": "c:\\Users\\Proprietaire\\Documents\\tmp\\my-first-web-app\\MyFirstWebApp\\Views\\Todos\\DeleteTodo.cshtml",
+      "TargetPath": "Views\\Todos\\DeleteTodo.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\Proprietaire\\Documents\\tmp\\my-first-web-app\\MyFirstWebApp\\Views\\_ViewStart.cshtml",
       "TargetPath": "Views\\_ViewStart.cshtml",
       "FileKind": "mvc"
