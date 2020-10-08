@@ -172,3 +172,4 @@ C:\Users\Proprietaire\Documents\tmp\my-first-web-app\MyFirstWebApp\bin\Debug\net
 C:\Users\Proprietaire\Documents\tmp\my-first-web-app\MyFirstWebApp\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Proprietaire\Documents\tmp\my-first-web-app\MyFirstWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Todos\AddTodo.cshtml.g.cs
 C:\Users\Proprietaire\Documents\tmp\my-first-web-app\MyFirstWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Todos\DeleteTodo.cshtml.g.cs
+C:\Users\Proprietaire\Documents\tmp\my-first-web-app\MyFirstWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Todos\UpdateTodo.cshtml.g.cs

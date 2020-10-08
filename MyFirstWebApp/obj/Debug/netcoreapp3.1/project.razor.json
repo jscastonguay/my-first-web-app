@@ -14440,6 +14440,11 @@
       "FilePath": "c:\\Users\\Proprietaire\\Documents\\tmp\\my-first-web-app\\MyFirstWebApp\\Views\\Home\\Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
       "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\Proprietaire\\Documents\\tmp\\my-first-web-app\\MyFirstWebApp\\Views\\Todos\\UpdateTodo.cshtml",
+      "TargetPath": "Views\\Todos\\UpdateTodo.cshtml",
+      "FileKind": "mvc"
     }
   ],
   "SerializationFormat": "0.2"

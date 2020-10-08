@@ -6,6 +6,8 @@ using MyFirstWebApp.Business;
 using MyFirstWebApp.Context.Data;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MyFirstWebApp.Controllers
 {
@@ -69,6 +71,7 @@ namespace MyFirstWebApp.Controllers
 
         public IActionResult Index()
         {
+            Console.WriteLine($"Index()");
             TodosListModel current = GetModel();
             ViewData["Counter"] = current.counter.counterValue;
             return View(current);
@@ -76,6 +79,7 @@ namespace MyFirstWebApp.Controllers
 
         public IActionResult CounterInc()
         {
+            Console.WriteLine($"CounterInc()");
             Counter current = GetCounter();
             current.counterValue++;
             _context.Counter.Update(current);
@@ -86,13 +90,14 @@ namespace MyFirstWebApp.Controllers
 
         public IActionResult AddTodo()
         {
+            Console.WriteLine($"AddTodo()");
             return View();
         }
 
         [HttpPost]
         public IActionResult AddTodo(string description, int priority, int etiquette)
         {
-            Console.WriteLine($"Voici la description: {description}");
+            Console.WriteLine($"AddTodo() -> Voici la description: {description}");
 
             if (!String.IsNullOrEmpty(description))
             {
@@ -110,6 +115,7 @@ namespace MyFirstWebApp.Controllers
 
         public IActionResult DeleteTodo()
         {
+            Console.WriteLine($"DeleteTodo()");
             TodosListModel current = GetModel();
             return View(current);
         }
@@ -117,6 +123,7 @@ namespace MyFirstWebApp.Controllers
         [HttpPost]
         public IActionResult DeleteTodo(int[] todo)
         {
+            Console.WriteLine($"DeleteTodo(int[] todo)");
             foreach (int item in todo)
             {
                 var itemToDelete = _context.Todo.Find(item);
@@ -126,5 +133,46 @@ namespace MyFirstWebApp.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        public IActionResult UpdateTodo()
+        {
+            Console.WriteLine($"UpdateTodo()");
+            TodosListModel current = GetModel();
+            return View(current);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateTodo(Todo todo)
+        {
+            Console.WriteLine($"UpdateTodo(Todo todo)");
+            return RedirectToAction(nameof(Index));
+        }
+
+        // Recevoir un objet JSON par le paramêtre de FindATodo() ne fonctionne pas
+        // Aucune idée pourquoi.
+        /*public class test {
+            public int id;
+        }*/
+        [HttpPost]
+        public IActionResult FindATodo([FromBody] /*test*/ int id)
+        {
+            Console.WriteLine($"FindATodo avec id: {id}");
+            Todo itemFound = _context.Todo.Find(id);
+            if (itemFound == null) {
+                itemFound = new Todo();
+                itemFound.description = "Error";
+                itemFound.etiquette = 0;
+                itemFound.priority = 110;
+            }
+            string jsonString;
+            jsonString = JsonSerializer.Serialize(itemFound);
+            return Content(jsonString);
+        }
+        /*public IActionResult FindATodo(int id)
+        {
+            Console.WriteLine($"FindATodo avec id: {id}");
+            Todo itemFound = _context.Todo.Find(id);
+            return View(itemFound);
+        }*/
     }
 }
