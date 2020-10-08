@@ -46,7 +46,7 @@
             url: 'FindATodo',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
-            data: elementSelected
+            data: JSON.stringify({ "id": parseInt(elementSelected)})
         }).done(function(result) {
             console.log('Voici la réponse: ' + result);
             var obj = JSON.parse(result);

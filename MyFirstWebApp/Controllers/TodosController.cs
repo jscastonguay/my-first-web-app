@@ -152,19 +152,17 @@ namespace MyFirstWebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Recevoir un objet JSON par le paramêtre de FindATodo() ne fonctionne pas
-        // Aucune idée pourquoi.
-        /*public class test {
-            public int id;
-        }*/
+        public class IdRx {
+            public int id {get; set;}
+        }
         [HttpPost]
-        public IActionResult FindATodo([FromBody] /*test*/ int id)
+        public IActionResult FindATodo([FromBody] IdRx id)
         {
-            Console.WriteLine($"FindATodo avec id: {id}");
-            Todo itemFound = _context.Todo.Find(id);
+            Console.WriteLine($"FindATodo avec id: {id.id}");
+            Todo itemFound = _context.Todo.Find(id.id);
             if (itemFound == null) {
                 itemFound = new Todo();
-                itemFound.description = "Error";
+                itemFound.description = "Error: not found";
                 itemFound.etiquette = 0;
                 itemFound.priority = 110;
             }
