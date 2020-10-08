@@ -15,6 +15,10 @@
 
 <form asp-controller="Todos" asp-action="UpdateTodo" method="post">
     <div>
+        <!-- <label for="id">Id:</label> -->
+        <input type="hidden" type="number" id="id" name="id">
+    </div>
+    <div>
         <label for="description">Description:</label>
         <input type="text" id="description" name="description">
     </div>
@@ -35,23 +39,21 @@
     function updateSelect() {
 
         console.log('updateSelect');
-
-        const uri = 'Todos/FindATodo';
-
         const elementSelected = document.getElementById('todo').value;
         console.log(elementSelected);
-
-        const item = {
-            id: elementSelected
-        };
 
         $.ajax({
             url: 'FindATodo',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
-            data: elementSelected//JSON.stringify(item)
+            data: elementSelected
         }).done(function(result) {
             console.log('Voici la réponse: ' + result);
+            var obj = JSON.parse(result);
+            document.getElementById('id').value = obj.Id;
+            document.getElementById('description').value = obj.description;
+            document.getElementById('priority').value = obj.priority;
+            document.getElementById('etiquette').value = obj.etiquette;
         });
     }
 </script>

@@ -144,7 +144,11 @@ namespace MyFirstWebApp.Controllers
         [HttpPost]
         public IActionResult UpdateTodo(Todo todo)
         {
-            Console.WriteLine($"UpdateTodo(Todo todo)");
+            Console.WriteLine($"UpdateTodo(Todo todo) -> {todo.description}");
+
+            _context.Todo.Update(todo);
+            _context.SaveChanges();
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -168,11 +172,5 @@ namespace MyFirstWebApp.Controllers
             jsonString = JsonSerializer.Serialize(itemFound);
             return Content(jsonString);
         }
-        /*public IActionResult FindATodo(int id)
-        {
-            Console.WriteLine($"FindATodo avec id: {id}");
-            Todo itemFound = _context.Todo.Find(id);
-            return View(itemFound);
-        }*/
     }
 }
