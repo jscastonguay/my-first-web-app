@@ -22,11 +22,13 @@
     Voici la valeur du counter: @ViewData["Counter"]
 </p>
 <p>
-    <h3>Voici la liste des TODO de priorité 0</h3>
+    <h3>Voici la liste des TODO</h3>
 </p>
 <p>
     <label for="priorityFilter">Filter (positive number):</label>
     <input type="number" id="priorityFilter" name="priorityFilter" min="0" onchange="filter()">
+    <input type="checkbox" id="filterEnable" name="filterEnable" value="Enable" onclick="enalbeFilter()">
+    <label for="filterEnable"> Filter enabled</label><br>
 </p>
 <table>
     <thead>
@@ -69,21 +71,40 @@
     <input type="submit" value="Update un Todo">
 </form>
 
-<script>
-    function filter() {
-        console.log('Évenement onchange');
-        $('#tableau tr').each(function () {
-            var tdText = $(this).children('td:nth-child(3)').text();
-            console.log(parseInt(tdText));
-            var filterVal = $('#priorityFilter').val();
-            console.log(filterVal);
-            if (parseInt(tdText) == filterVal) {
-                $(this).show();
-                console.log('show');
-            } else {
-                $(this).hide();
-                console.log('hide');
+@section Scripts {
+    <script>
+        function filter() {
+            $('#tableau tr').each(function () {
+                var tdText = $(this).children('td:nth-child(3)').text();
+                var filterVal = $('#priorityFilter').val();
+                if ((parseInt(tdText) == filterVal) || (document.getElementById('filterEnable').checked == false)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+
+        function enalbeFilter() {
+            var checkbox = document.getElementById('filterEnable');
+            var priorityFilter = document.getElementById('priorityFilter');
+            
+            priorityFilter.disabled = !checkbox.checked;
+
+            if (checkbox.checked) {
+                var filterVal = $('#priorityFilter').val();
+                if (filterVal) {
+                } else {
+                    $('#priorityFilter').val(0);
+                }
             }
+            filter();
+        }
+
+        $( document ).ready(function() {
+            console.log('ready');
+            document.getElementById('priorityFilter').disabled = true;
+            document.getElementById('filterEnable').checked = false;
         });
-    }
-</script>
+    </script>
+}
