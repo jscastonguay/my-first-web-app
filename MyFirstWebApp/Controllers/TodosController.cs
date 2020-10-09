@@ -71,15 +71,16 @@ namespace MyFirstWebApp.Controllers
 
         public IActionResult Index()
         {
-            Console.WriteLine($"Index()");
+            Console.WriteLine("Index()");
             TodosListModel current = GetModel();
             ViewData["Counter"] = current.counter.counterValue;
+
             return View(current);
         }
 
         public IActionResult CounterInc()
         {
-            Console.WriteLine($"CounterInc()");
+            Console.WriteLine("CounterInc()");
             Counter current = GetCounter();
             current.counterValue++;
             _context.Counter.Update(current);
@@ -90,7 +91,7 @@ namespace MyFirstWebApp.Controllers
 
         public IActionResult AddTodo()
         {
-            Console.WriteLine($"AddTodo()");
+            Console.WriteLine("AddTodo()");
             return View();
         }
 
@@ -115,7 +116,7 @@ namespace MyFirstWebApp.Controllers
 
         public IActionResult DeleteTodo()
         {
-            Console.WriteLine($"DeleteTodo()");
+            Console.WriteLine("DeleteTodo()");
             TodosListModel current = GetModel();
             return View(current);
         }
@@ -123,7 +124,7 @@ namespace MyFirstWebApp.Controllers
         [HttpPost]
         public IActionResult DeleteTodo(int[] todo)
         {
-            Console.WriteLine($"DeleteTodo(int[] todo)");
+            Console.WriteLine("DeleteTodo(int[] todo)");
             foreach (int item in todo)
             {
                 var itemToDelete = _context.Todo.Find(item);
@@ -136,7 +137,7 @@ namespace MyFirstWebApp.Controllers
 
         public IActionResult UpdateTodo()
         {
-            Console.WriteLine($"UpdateTodo()");
+            Console.WriteLine("UpdateTodo()");
             TodosListModel current = GetModel();
             return View(current);
         }
@@ -152,15 +153,18 @@ namespace MyFirstWebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public class IdRx {
-            public int id {get; set;}
+        public class IdRx
+        {
+            public int id { get; set; }
         }
+
         [HttpPost]
         public IActionResult FindATodo([FromBody] IdRx id)
         {
             Console.WriteLine($"FindATodo avec id: {id.id}");
             Todo itemFound = _context.Todo.Find(id.id);
-            if (itemFound == null) {
+            if (itemFound == null)
+            {
                 itemFound = new Todo();
                 itemFound.description = "Error: not found";
                 itemFound.etiquette = 0;

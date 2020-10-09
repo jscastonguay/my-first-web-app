@@ -24,6 +24,10 @@
 <p>
     <h3>Voici la liste des TODO de priorité 0</h3>
 </p>
+<p>
+    <label for="priorityFilter">Filter (positive number):</label>
+    <input type="number" id="priorityFilter" name="priorityFilter" min="0" onchange="filter()">
+</p>
 <table>
     <thead>
         <tr>
@@ -38,7 +42,7 @@
             </th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="tableau">
 @foreach (var item in Model.todosList) {
         <tr>
             <td>
@@ -64,3 +68,22 @@
 <form asp-controller="Todos" asp-action="UpdateTodo" method="get">
     <input type="submit" value="Update un Todo">
 </form>
+
+<script>
+    function filter() {
+        console.log('Évenement onchange');
+        $('#tableau tr').each(function () {
+            var tdText = $(this).children('td:nth-child(3)').text();
+            console.log(parseInt(tdText));
+            var filterVal = $('#priorityFilter').val();
+            console.log(filterVal);
+            if (parseInt(tdText) == filterVal) {
+                $(this).show();
+                console.log('show');
+            } else {
+                $(this).hide();
+                console.log('hide');
+            }
+        });
+    }
+</script>
