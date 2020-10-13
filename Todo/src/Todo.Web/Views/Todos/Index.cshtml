@@ -1,0 +1,110 @@
+@model Todo.Web.Models.TodosListModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1> La page de Todos </h1>
+
+<form method="post">
+    <div>
+        <label for="newCounterValue">Ceci est le counter:</label>
+        <input type="number" id="newCounterValue" name="newCounterValue" value="@ViewData["Counter"]">
+    </div>
+    <div>
+        <input type="submit" value="Set">
+    </div>
+</form>
+<form asp-controller="Todos" asp-action="CounterInc" method="get">
+    <input type="submit" value="Increase">
+</form>
+<p>
+    Voici la valeur du counter: @ViewData["Counter"]
+</p>
+<p>
+    <h3>Voici la liste des TODO</h3>
+</p>
+<p>
+    <label for="priorityFilter">Filter (positive number):</label>
+    <input type="number" id="priorityFilter" name="priorityFilter" min="0" onchange="filter()">
+    <input type="checkbox" id="filterEnable" name="filterEnable" value="Enable" onclick="enalbeFilter()">
+    <label for="filterEnable"> Filter enabled</label><br>
+</p>
+<table>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.todosList[0].description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.todosList[0].etiquette)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.todosList[0].priority)
+            </th>
+        </tr>
+    </thead>
+    <tbody id="tableau">
+@foreach (var item in Model.todosList) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.etiquette)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.priority)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<form asp-controller="Todos" asp-action="AddTodo" method="get">
+    <input type="submit" value="Ajouter un Todo">
+</form>
+<form asp-controller="Todos" asp-action="DeleteTodo" method="get">
+    <input type="submit" value="Enlever un Todo">
+</form>
+<form asp-controller="Todos" asp-action="UpdateTodo" method="get">
+    <input type="submit" value="Update un Todo">
+</form>
+
+@section Scripts {
+    <script>
+        function filter() {
+            $('#tableau tr').each(function () {
+                var tdText = $(this).children('td:nth-child(3)').text();
+                var filterVal = $('#priorityFilter').val();
+                if ((parseInt(tdText) == filterVal) || (document.getElementById('filterEnable').checked == false)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+
+        function enalbeFilter() {
+            var checkbox = document.getElementById('filterEnable');
+            var priorityFilter = document.getElementById('priorityFilter');
+            
+            priorityFilter.disabled = !checkbox.checked;
+
+            if (checkbox.checked) {
+                var filterVal = $('#priorityFilter').val();
+                if (filterVal) {
+                } else {
+                    $('#priorityFilter').val(0);
+                }
+            }
+            filter();
+        }
+
+        $( document ).ready(function() {
+            console.log('ready');
+            document.getElementById('priorityFilter').disabled = true;
+            document.getElementById('filterEnable').checked = false;
+        });
+    </script>
+}
